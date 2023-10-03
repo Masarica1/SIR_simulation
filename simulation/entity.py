@@ -61,7 +61,6 @@ class Suspicious(Person):
 
     def infection_check(self):
         collide_list = pygame.sprite.spritecollide(self, infected_group, False)
-        print(len(collide_list))
         for _ in collide_list:
             if random.choice(range(50)) == 1:
                 # noinspection PyTypeChecker

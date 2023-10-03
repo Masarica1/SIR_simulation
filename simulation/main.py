@@ -28,9 +28,15 @@ with open('record.csv', 'w', newline=''):
 
 running = True
 while running:
+    Time.timer += 1
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == Time.event_1:
+            write()
+
+    if Time.timer == 100000:
+        running = False
 
     entity.window.fill((255, 255, 255))
 
@@ -47,6 +53,5 @@ while running:
 
     pygame.display.update()
     Time.clock.tick(60)
-
-    write()
+    print(Time.timer)
 pygame.quit()

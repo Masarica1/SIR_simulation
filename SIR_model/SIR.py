@@ -3,8 +3,8 @@ import numpy as np
 
 nday = 100000
 dt = 1 / 60
-beta = 1.7 * (1 / 35)
-gamma = 1 / (8 / dt)
+beta = 0.8 * (1 / 35)
+gamma = 1 / 480
 
 S = np.zeros(nday)
 I = np.zeros(nday)
