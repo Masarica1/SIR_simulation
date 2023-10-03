@@ -7,6 +7,7 @@ pygame.init()
 
 class Time:
     timer = 0
+    timer_1 = 0
 
     clock = pygame.time.Clock()
     event_1 = pygame.USEREVENT + 1
@@ -17,9 +18,9 @@ def write():
     with open('record.csv', 'a', newline='') as file:
         writer = csv.writer(file)
         writer.writerow([
-            len(entity.suspicious_group) / entity.number_s,
-            len(entity.infected_group) / entity.number_s,
-            len(entity.recovered_group) / entity.number_s
+            len(entity.suspicious_group) / entity.data['population'],
+            len(entity.infected_group) / entity.data['population'],
+            len(entity.recovered_group) / entity.data['population']
         ])
 
 
@@ -32,10 +33,7 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == Time.event_1:
-            write()
-
-    if Time.timer == 100000:
+    if Time.timer == 2500:
         running = False
 
     entity.window.fill((255, 255, 255))
@@ -53,5 +51,7 @@ while running:
 
     pygame.display.update()
     Time.clock.tick(60)
+    write()
     print(Time.timer)
+
 pygame.quit()

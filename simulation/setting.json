@@ -1,0 +1,10 @@
+{
+  "width": 1560,
+  "height": 960,
+  "size": 6,
+  "population": 1000,
+  "initial_infectious": 1,
+
+  "p_infection": 50,
+  "p_recovery": 8
+}

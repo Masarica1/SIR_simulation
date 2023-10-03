@@ -1,8 +1,13 @@
 import pygame
 import random
+import json
 
-window_h = 960
-window_w = 1560
+
+with open('setting.json', 'r') as file:
+    data = json.load(file)
+
+window_h = data['height']
+window_w = data['width']
 window = pygame.display.set_mode((window_w, window_h))
 
 # color
@@ -12,7 +17,7 @@ RED = (255, 0, 0)
 GRAY = (127, 127, 127)
 
 # size
-size = 6
+size = data['size']
 
 
 def speed_setting(x_dir: bool, y_dir: bool):
@@ -62,7 +67,7 @@ class Suspicious(Person):
     def infection_check(self):
         collide_list = pygame.sprite.spritecollide(self, infected_group, False)
         for _ in collide_list:
-            if random.choice(range(50)) == 1:
+            if random.choice(range(data['p_infection'])) == 1:
                 # noinspection PyTypeChecker
                 suspicious_group.remove(self)
                 # noinspection PyTypeChecker
@@ -83,7 +88,7 @@ class Infected(Person):
     def update(self):
         super().update()
 
-        if random.choice(range(8*60)) == 1:
+        if random.choice(range(data['p_recovery'] * 60)) == 1:
             # noinspection PyTypeChecker
             recovered_group.add(Recovered(self.rect.center, self.vel))
             # noinspection PyTypeChecker
@@ -105,13 +110,11 @@ suspicious_group = pygame.sprite.Group()
 infected_group = pygame.sprite.Group()
 recovered_group = pygame.sprite.Group()
 
-number_s = int(input('전체 인구수: '))
-number_i = int(input('초기 감염자 수: '))
-for i in range(number_s - number_i):
+for i in range(data['population'] - data['initial_infectious']):
     # noinspection PyTypeChecker
     suspicious_group.add(Suspicious())
 
-for i in range(number_i):
+for i in range(data['initial_infectious']):
     # noinspection PyTypeChecker
     infected_group.add(Infected([random.choice(range(window_w)), random.choice(range(window_h))],
                                 [random.choice(range(-10, 10)), random.choice(range(-10, 10))]))
