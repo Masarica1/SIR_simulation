@@ -60,14 +60,14 @@ class Suspicious(Person):
         self.rect.center = [random.choice(range(window_w)), random.choice(range(window_h))]
 
     def infection_check(self):
-        for infected in infected_group:
-            d = (self.rect.centerx - infected.rect.centerx) ** 2 + (self.rect.centery - infected.rect.centery) ** 2
-            if d < (size*4)**2:
-                if random.choice(range(35)) == 0:
-                    # noinspection PyTypeChecker
-                    suspicious_group.remove(self)
-                    # noinspection PyTypeChecker
-                    infected_group.add(Infected(self.rect.center, self.vel))
+        collide_list = pygame.sprite.spritecollide(self, infected_group, False)
+        print(len(collide_list))
+        for _ in collide_list:
+            if random.choice(range(50)) == 1:
+                # noinspection PyTypeChecker
+                suspicious_group.remove(self)
+                # noinspection PyTypeChecker
+                infected_group.add(Infected(self.rect.center, self.vel))
 
 
 class Infected(Person):
@@ -78,15 +78,13 @@ class Infected(Person):
         self.vel = vel
         self.rect.center = center
 
-        self.recover_time = 8
-
         pygame.draw.circle(self.image, (255, 0, 0, 63), (size*3, size*3), size*3)
         pygame.draw.circle(self.image, RED, (size*3, size*3), size/2)
 
     def update(self):
         super().update()
 
-        if self.recover_time <= 0:
+        if random.choice(range(8*60)) == 1:
             # noinspection PyTypeChecker
             recovered_group.add(Recovered(self.rect.center, self.vel))
             # noinspection PyTypeChecker

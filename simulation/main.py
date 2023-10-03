@@ -10,7 +10,7 @@ class Time:
 
     clock = pygame.time.Clock()
     event_1 = pygame.USEREVENT + 1
-    pygame.time.set_timer(event_1, 1000)
+    pygame.time.set_timer(event_1, 250)
 
 
 def write():
@@ -31,12 +31,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == Time.event_1:
-            for i in entity.infected_group:
-                i.recover_time -= 1
-            write()
-
-            Time.timer += 1
 
     entity.window.fill((255, 255, 255))
 
@@ -53,4 +47,6 @@ while running:
 
     pygame.display.update()
     Time.clock.tick(60)
+
+    write()
 pygame.quit()
